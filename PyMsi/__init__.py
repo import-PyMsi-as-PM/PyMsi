@@ -1266,6 +1266,14 @@ from .pyx import _PyxModule
 
 
 # ═══════════════════════════════════════════════════════════════
+# Cmd 终端扩展引擎 (v2.4.0 新增) — Windows命令也能在Linux上用
+# Pjsoi / Pytem / .msh / .mhn / .fsu
+# 纯 Python 标准库 + 系统 API, 跨平台
+# ═══════════════════════════════════════════════════════════════
+from .cmd import _CmdModule
+
+
+# ═══════════════════════════════════════════════════════════════
 # 主类
 # ═══════════════════════════════════════════════════════════════
 
@@ -1319,6 +1327,7 @@ class _PyMsi:
         self._train_module = _TrainModule()
         self._mnn_module = _MnnModule()
         self._pyx_module = _PyxModule()
+        self._cmd_module = _CmdModule()
 
     def __call__(self, path):
         """
@@ -2786,6 +2795,80 @@ class _PyMsi:
         """
         return self._pyx_module
 
+    @property
+    def cmd(self):
+        """
+        🖥️ cmd 终端扩展引擎 (v2.4.0 新增)
+
+        把 WINDOWS 的命令能在 LINUX 上面使用
+        本质就是把 WINDOWS 的命令全部映射成 LINUX 上面的功能
+
+        独特扩展:
+          Pjsoi "你的python目录"
+            把路径存到 .msh (自己的数据文件)，不是系统环境变量
+            以后在这个终端里不用输全路径就能直接用 python
+
+          Pytem "你的python目录"
+            直接搞到系统 PATH，跳过 msh
+
+        专属终端文件:
+          .msh — 终端配置文件 (路径/别名)
+          .mhn — 终端历史记录文件
+          .fsu — 终端快捷方式文件
+
+        跨平台:
+          Windows: 调用 cmd/powershell
+          Linux:   用系统自带终端
+          macOS:   用 Terminal.app / iTerm2
+
+        纯 Python 标准库 + 系统 API，零第三方依赖。
+
+        用法:
+            # 启动终端
+            PM.cmd()                    # 打开 PyMsi 交互终端
+            PM.cmd("dir")               # 执行一条命令 (跨平台)
+            PM.cmd.run("notepad.exe")   # 运行程序
+
+            # Pjsoi: Python 目录加入 .msh
+            PM.cmd.Pjsoi("C:/Python312")
+
+            # Pytem: Python 目录加入系统 PATH
+            PM.cmd.Pytem("C:/Python312")
+
+            # .msh 配置
+            PM.cmd.msh_path()           # 查看 .msh 路径
+            PM.cmd.msh_list()           # 列出 .msh 里的路径
+            PM.cmd.msh_add("路径")      # 添加路径到 .msh
+            PM.cmd.msh_remove("路径")   # 从 .msh 移除路径
+
+            # .mhn 历史记录
+            PM.cmd.mhn()                # 查看历史
+            PM.cmd.mhn_clear()          # 清空历史
+            PM.cmd.mhn_export("out.mhn") # 导出历史
+
+            # .fsu 快捷方式
+            PM.cmd.fsu_save("name", "command")  # 保存快捷方式
+            PM.cmd.fsu_run("name")               # 运行快捷方式
+            PM.cmd.fsu_list()                    # 列出所有快捷方式
+            PM.cmd.fsu_delete("name")            # 删除快捷方式
+
+            # 跨平台命令 (Windows 风格也能用)
+            PM.cmd.dir(".")              # 列目录 (dir/ls)
+            PM.cmd.copy("a", "b")        # 复制 (copy/cp)
+            PM.cmd.delete("file")        # 删除 (del/rm)
+            PM.cmd.md("dir")             # 建目录 (md/mkdir)
+            PM.cmd.rd("dir")             # 删目录 (rd/rm)
+            PM.cmd.type("file")          # 显示内容 (type/cat)
+            PM.cmd.cls()                 # 清屏 (cls/clear)
+            PM.cmd.ipconfig()            # 网络信息
+            PM.cmd.tasklist()            # 进程列表
+            PM.cmd.ping("host")          # ping
+
+            # 演示
+            PM.cmd.demo()
+        """
+        return self._cmd_module
+
 
 # ─── 模块替换：把自身变成可调用的 PM 实例 ─────────────────
 # 先捕获所有模块属性，再替换 sys.modules
@@ -2804,7 +2887,7 @@ _sys.modules[__name__] = PM
 
 # 保留模块属性以便 from PyMsi import ... 和包发现正常工作
 PM.__all__ = ["PM"]
-PM.__version__ = "2.3.0"
+PM.__version__ = "2.4.0"
 PM.__file__ = _module_file
 PM.__path__ = _module_path
 PM.__name__ = _module_name
