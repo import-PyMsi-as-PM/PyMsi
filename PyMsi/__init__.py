@@ -1272,6 +1272,13 @@ from .pyx import _PyxModule
 # ═══════════════════════════════════════════════════════════════
 from .cmd import _CmdModule
 
+# ═══════════════════════════════════════════════════════════════
+# MetHow 还原引擎 + Homtaw SDK (v2.5.0 新增)
+# 快速还原 | 权限管理 | 密码找回 | 1350+ API SDK
+# ═══════════════════════════════════════════════════════════════
+from .methow import _MetHowModule
+from .homtaw import _HomtawModule
+
 
 # ═══════════════════════════════════════════════════════════════
 # 主类
@@ -1328,6 +1335,8 @@ class _PyMsi:
         self._mnn_module = _MnnModule()
         self._pyx_module = _PyxModule()
         self._cmd_module = _CmdModule()
+        self._methow_module = _MetHowModule()
+        self._homtaw_module = _HomtawModule()
 
     def __call__(self, path):
         """
@@ -2869,6 +2878,80 @@ class _PyMsi:
         """
         return self._cmd_module
 
+    @property
+    def methow(self):
+        """
+        ⚡ MetHow 还原引擎 (v2.5.0 新增)
+
+        快速还原系统，比冰点还原快，不像还原精灵那样慢。
+        可设置密码也可不设。
+        权限分教师/学生，学生必须通过教师同意。
+
+        一键还原: PM.methow.quick_restore()
+        密码找回: PM.methow.recover_password(账号, 邮箱)
+
+        专属文件: .mhs (快照) / .mhc (配置)
+
+        用法:
+            # 快照 & 还原
+            PM.methow.snapshot("C:/mydir")       # 拍快照
+            PM.methow.restore()                  # 一键还原 (最近快照)
+            PM.methow.quick_restore()            # 快捷还原
+            PM.methow.list_snapshots()           # 列出快照
+
+            # 密码
+            PM.methow.set_password("pwd")        # 设密码
+            PM.methow.recover_password("user", "email")  # 找回密码
+
+            # 权限
+            PM.methow.add_teacher("老师", "手机", "邮箱")
+            PM.methow.add_student("学生", "邮箱")
+            PM.methow.request_approval("学生", "老师")
+            PM.methow.approve("老师", "学生")
+
+            # 演示
+            PM.methow.demo()
+        """
+        return self._methow_module
+
+    @property
+    def homtaw(self):
+        """
+        🔧 Homtaw SDK (v2.5.0 新增)
+
+        MetHow 的独立 SDK，有自己的协议 (HWP)。
+        1350+ API，用 50+ 个就能完成和 MetHow 一模一样的操作。
+
+        额度系统: 每次 API 调用消耗 1 额度
+        赚取方式: 签到(+100) / 验证码(+50) / 编程挑战(+200)
+
+        用法:
+            # 调用 API
+            PM.homtaw.call('file_read', path='/etc/hostname')
+            PM.homtaw.call('hash_string', algo='md5', data='hello')
+
+            # 查看额度
+            PM.homtaw.quota_info()
+
+            # 赚取额度
+            PM.homtaw.earn_daily()        # 每日签到 +100
+            PM.homtaw.earn_captcha()     # 验证码 +50
+            PM.homtaw.earn_code_challenge()  # 编程挑战 +200
+
+            # 查看API
+            PM.homtaw.api_count()         # API 总数 (1350+)
+            PM.homtaw.list_apis()         # 列出 API
+            PM.homtaw.list_categories()   # 分类统计
+            PM.homtaw.search_apis('hash') # 搜索 API
+
+            # 用 SDK 复刻 MetHow
+            PM.homtaw.replicate_methow()
+
+            # 演示
+            PM.homtaw.demo()
+        """
+        return self._homtaw_module
+
 
 # ─── 模块替换：把自身变成可调用的 PM 实例 ─────────────────
 # 先捕获所有模块属性，再替换 sys.modules
@@ -2887,7 +2970,7 @@ _sys.modules[__name__] = PM
 
 # 保留模块属性以便 from PyMsi import ... 和包发现正常工作
 PM.__all__ = ["PM"]
-PM.__version__ = "2.4.0"
+PM.__version__ = "2.5.0"
 PM.__file__ = _module_file
 PM.__path__ = _module_path
 PM.__name__ = _module_name

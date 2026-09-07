@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "PyMsi"
-version = "2.4.0"
-description = "文件夹→MSI | HTML→EXE (Electron) | 30+内置游戏 | Hex解析 | AI空壳 | 翻译(100+语) | 邮件(验证码) | 文件串🧶 | 📹录屏 | 🐱.meow打包 | 🔐权限提升 | 📦.nano容器 | 📡摩斯密码视频 | 🎨十六进制RGB视频 | 🧬生物教育 | ⚗️化学教育 | 🔢数学教育 | 🐾MeowHawk搜索引擎 | 🔙回溯算法 | 🐮.cow格式 | 🧠AI训练引擎 | 🤖.mnn G进制格式 | 🎬pyx视频提取 | 📊ckon视频验证 | 🖥️cmd终端扩展 — 像 PyInstaller 一样简单"
+version = "2.5.0"
+description = "文件夹→MSI | HTML→EXE (Electron) | 30+内置游戏 | Hex解析 | AI空壳 | 翻译(100+语) | 邮件(验证码) | 文件串🧶 | 📹录屏 | 🐱.meow打包 | 🔐权限提升 | 📦.nano容器 | 📡摩斯密码视频 | 🎨十六进制RGB视频 | 🧬生物教育 | ⚗️化学教育 | 🔢数学教育 | 🐾MeowHawk搜索引擎 | 🔙回溯算法 | 🐮.cow格式 | 🧠AI训练引擎 | 🤖.mnn G进制格式 | 🎬pyx视频提取 | 📊ckon视频验证 | 🖥️cmd终端扩展 | ⚡MetHow还原引擎 | 🔧Homtaw SDK 1350+API — 像 PyInstaller 一样简单"
 readme = {text = "PyMsi - 文件夹→MSI | HTML→EXE | 30+内置游戏 | Hex解析 | AI空壳 | 翻译\n===========================================\n\n用法:\n    import PyMsi as PM\n    \n    # 文件夹 → MSI\n    PM(\"C:/your_folder\")\n    PM.s(2)  # 极速模式\n    \n    # HTML → EXE (像 Electron)\n    PM.html(\"C:/html_project\")\n    PM.html.sandbox(True)\n    PM.html.build()\n    \n    # 30+ 内置游戏\n    PM.game.Grap(\"Snake\")\n    PM.game.list()\n    \n    # 文件 Hex 解析\n    PM.hex(\"C:/file.bin\")\n    \n    # AI 空壳 (设 key + url 后问问题)\n    PM.ai.key = 'sk-xxx'\n    PM.ai.url = 'https://api.openai.com'\n    PM.ai.imput('你好')\n    \n    # 翻译 (100+ 种语言, LibreTranslate)\n    PM.translate.ja('你好')      # → 日语\n    PM.translate.ru('你好')      # → 俄语\n    PM.translate.fr('你好')      # → 法语\n", content-type = "text/plain"}
 requires-python = ">=3.7"
 authors = [{name = "PyMsi"}]
