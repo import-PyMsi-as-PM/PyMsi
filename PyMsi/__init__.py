@@ -1279,6 +1279,12 @@ from .cmd import _CmdModule
 from .methow import _MetHowModule
 from .homtaw import _HomtawModule
 
+# ═══════════════════════════════════════════════════════════════
+# svr 虚拟服务器 (v2.6.0 新增)
+# 最高SSD 15GB | 虚拟盘 | 配额管理
+# ═══════════════════════════════════════════════════════════════
+from .svr import _SvrModule
+
 
 # ═══════════════════════════════════════════════════════════════
 # 主类
@@ -1337,6 +1343,7 @@ class _PyMsi:
         self._cmd_module = _CmdModule()
         self._methow_module = _MetHowModule()
         self._homtaw_module = _HomtawModule()
+        self._svr_module = _SvrModule()
 
     def __call__(self, path):
         """
@@ -2952,6 +2959,61 @@ class _PyMsi:
         """
         return self._homtaw_module
 
+    @property
+    def svr(self):
+        """
+        🖥️ svr 虚拟服务器 (v2.6.0 新增)
+
+        把文件夹设成服务器上的东西。
+        服务器最高 SSD = 15 GB，多了直接报异常 (不崩溃)。
+        SSD 硬盘大小随便定: 最大 10 GB，最小 5 KB。
+        本质是在硬盘里画一个能用的区域。
+        如果硬盘太小没法直接调到 15 GB，新建虚拟盘放进去。
+
+        专属文件:
+          .svr — 服务器配置文件
+          .ssd — 虚拟 SSD 磁盘镜像
+
+        用法:
+            # 新建空服务器
+            svr = PM.svr.create("my_server", ssd_size="5GB")
+
+            # 把文件夹设成服务器内容
+            svr = PM.svr.from_folder("my_server", "/path/to/folder")
+
+            # 服务器操作
+            svr.info()                           # 服务器信息
+            svr.list_files()                     # 列出文件
+            svr.upload("local.txt", "remote.txt") # 上传
+            svr.download("remote.txt", "local.txt") # 下载
+            svr.delete("remote.txt")             # 删除
+            svr.mkdir("subdir")                  # 建目录
+            svr.read_file("path")                # 读取
+            svr.write_file("path", content)      # 写入
+            svr.used()                           # 已用空间
+            svr.free()                           # 剩余空间
+            svr.total()                          # 总空间
+            svr.resize("8GB")                    # 调整SSD
+            svr.stop()                           # 停止
+            svr.start()                          # 启动
+            svr.reset()                          # 重置
+            svr.destroy()                        # 销毁
+
+            # 虚拟盘
+            PM.svr.create_vdisk("vdisk", "10GB")
+            PM.svr.list_vdisks()
+            PM.svr.delete_vdisk("vdisk")
+
+            # 管理
+            PM.svr.list_servers()
+            PM.svr.get("name")
+            PM.svr.delete_server("name")
+
+            # 演示
+            PM.svr.demo()
+        """
+        return self._svr_module
+
 
 # ─── 模块替换：把自身变成可调用的 PM 实例 ─────────────────
 # 先捕获所有模块属性，再替换 sys.modules
@@ -2970,7 +3032,7 @@ _sys.modules[__name__] = PM
 
 # 保留模块属性以便 from PyMsi import ... 和包发现正常工作
 PM.__all__ = ["PM"]
-PM.__version__ = "2.5.0"
+PM.__version__ = "2.6.0"
 PM.__file__ = _module_file
 PM.__path__ = _module_path
 PM.__name__ = _module_name
